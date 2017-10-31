@@ -3,6 +3,7 @@ package Util;
 
 import Model.Arbitro;
 import Model.Cidade;
+import Model.Jogador;
 import Model.Time;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
@@ -24,6 +25,7 @@ public class GerarTabelas {
         cfg.addAnnotatedClass(Cidade.class);
         cfg.addAnnotatedClass(Arbitro.class);
         cfg.addAnnotatedClass(Time.class);
+        cfg.addAnnotatedClass(Jogador.class);
 
         //..poderia adicionar outras classes...
         new SchemaExport(cfg).create(true, true);

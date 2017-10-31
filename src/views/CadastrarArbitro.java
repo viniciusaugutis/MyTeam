@@ -208,7 +208,7 @@ public class CadastrarArbitro extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        try {
             if (txNome.getText().equals ("")) {
-                throw new Exception ("O nome do arbitro deve ser preenchido");
+                 JOptionPane.showMessageDialog(null, "O nome do arbitro deve ser preenchido");
             }
             
             String nome = txNome.getText();

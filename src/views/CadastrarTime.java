@@ -65,6 +65,12 @@ public class CadastrarTime extends javax.swing.JFrame {
             }
         });
 
+        txNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txNomeActionPerformed(evt);
+            }
+        });
+
         jLabel9.setText("Nome:");
 
         jLabel10.setText("Pontos:");
@@ -171,7 +177,7 @@ public class CadastrarTime extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
          try {
             if (txNome.getText().equals ("")) {
-                throw new Exception ("O campo nome deve ser preenchido");
+                JOptionPane.showMessageDialog(null, "O nome do time deve ser preenchido");
             }
             
             String nome = txNome.getText();
@@ -193,6 +199,10 @@ public class CadastrarTime extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txNomeActionPerformed
 
      public void limpaTela(){
         txNome.setText("");
