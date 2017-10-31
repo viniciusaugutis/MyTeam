@@ -3,6 +3,7 @@ package Util;
 
 import Model.Cidade;
 import Model.Arbitro;
+import Model.Time;
 import java.util.Set;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,6 +26,7 @@ public class HibernateUtil {
         Set<String> stringPropertyNames = cfg.getProperties().stringPropertyNames();
         cfg.addAnnotatedClass(Cidade.class);
         cfg.addAnnotatedClass(Arbitro.class);
+        cfg.addAnnotatedClass(Time.class);
         factory = cfg.buildSessionFactory();
     }
     public static Session getSession() {

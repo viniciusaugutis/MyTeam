@@ -34,7 +34,7 @@ public class Arbitro {
     @Column(name = "bairro")
     private String bairro;
 
-    @Column(name = "bairro")
+    @Column(name = "numero")
     private int numero;
 
     @Column(name = "cep")

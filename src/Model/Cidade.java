@@ -24,9 +24,9 @@ import javax.persistence.Table;
 @Entity @Table(name="cidade")
 public class Cidade {
     
-    public Cidade(int codigo, String nome){
-        this.codigo = codigo;
+    public Cidade(String nome, String estado){
         this.nome = nome;
+        this.estado = estado;
     }
     
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
