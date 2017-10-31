@@ -5,6 +5,14 @@
  */
 package views;
 
+import DAO.CidadeDAO;
+import DAO.TimeDAO;
+import Model.Cidade;
+import Model.Time;
+import Util.HibernateUtil;
+import javax.swing.JOptionPane;
+import org.hibernate.Session;
+
 /**
  *
  * @author Aluno
@@ -30,14 +38,14 @@ public class CadastrarTime extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txNome = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jSpinner3 = new javax.swing.JSpinner();
+        txPontos = new javax.swing.JTextField();
+        txGolsPro = new javax.swing.JSpinner();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jSpinner4 = new javax.swing.JSpinner();
+        txGolsContra = new javax.swing.JSpinner();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
@@ -94,7 +102,7 @@ public class CadastrarTime extends javax.swing.JFrame {
                             .addComponent(jLabel9))
                         .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField5)
+                            .addComponent(txNome)
                             .addComponent(jTextField4)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,9 +111,9 @@ public class CadastrarTime extends javax.swing.JFrame {
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField6)
-                            .addComponent(jSpinner3)
-                            .addComponent(jSpinner4)))
+                            .addComponent(txPontos)
+                            .addComponent(txGolsPro)
+                            .addComponent(txGolsContra)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(124, 124, 124)
                         .addComponent(jLabel7))
@@ -128,19 +136,19 @@ public class CadastrarTime extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txPontos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txGolsPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txGolsContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
@@ -161,9 +169,39 @@ public class CadastrarTime extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+         try {
+            if (txNome.getText().equals ("")) {
+                throw new Exception ("O campo nome deve ser preenchido");
+            }
+            
+            String nome = txNome.getText();
+            int pontos = Integer.parseInt(txPontos.getText());
+            int golsPro = Integer.parseInt(txGolsPro.getValue().toString());
+            int golsContra = Integer.parseInt(txGolsContra.getValue().toString());
+          
+            Time time  = new Time(nome, pontos, golsPro, golsContra);
+            
+            Session session = HibernateUtil.getSession();
+            TimeDAO dao = new TimeDAO(session);
+            
+            dao.salva(time);
+            limpaTela();
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            
+            
+        } catch (Exception e) {
+            
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+     public void limpaTela(){
+        txNome.setText("");
+        txPontos.setText("");
+        txGolsPro.setValue("");
+        txGolsContra.setValue("");
+    }
+    
+     
     /**
      * @param args the command line arguments
      */
@@ -208,10 +246,10 @@ public class CadastrarTime extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JSpinner jSpinner3;
-    private javax.swing.JSpinner jSpinner4;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JSpinner txGolsContra;
+    private javax.swing.JSpinner txGolsPro;
+    private javax.swing.JTextField txNome;
+    private javax.swing.JTextField txPontos;
     // End of variables declaration//GEN-END:variables
 }

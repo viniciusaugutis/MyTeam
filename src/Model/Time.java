@@ -20,18 +20,27 @@ import javax.persistence.Table;
 @Entity @Table(name="time")
 public class Time {
     
+    public Time(String nome, int pontos, int golsPro, int golsContra) {
+        this.nome = nome;
+        this.pontos = pontos;
+        this.golsPro = golsPro;
+        this.golsContra = golsContra;
+    }
+    
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int codigo;
     
-    @Column(name = "pontos")
-    private int pontos;
-    
     @Column(name = "nome")
     private String nome;
+    
+    @Column(name = "pontos")
+    private int pontos;
     
     @Column(name = "gols_pro")
     private int golsPro;
     
     @Column(name = "gols_contra")
     private int golsContra;
+
+   
 }

@@ -143,7 +143,7 @@ public class CadastrarCidade extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          try {
             if (txCidade.getText().equals ("")) {
-                throw new Exception ("Nao deve conter campos nulos");
+                throw new Exception ("O nome da cidade deve ser preenchido");
             }
             
             String nome = txCidade.getText();
