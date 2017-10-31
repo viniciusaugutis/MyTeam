@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * @author Aluno
  */
 
-@Entity @Table(name="cidade")
+@Entity @Table(name="arbitro")
 public class Arbitro {
     
     @Id @GeneratedValue(strategy = GenerationType.AUTO)

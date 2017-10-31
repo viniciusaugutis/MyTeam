@@ -35,6 +35,9 @@ public class Cidade {
     @Column(name = "nome", length = 500)
     private String nome;
     
+     @Column(name = "estado", length = 500)
+    private String estado;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cidade", targetEntity = Arbitro.class)
     private List<Arbitro> arbitros;
 
