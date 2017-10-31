@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,14 +23,19 @@ import javax.persistence.Table;
  */
 
 @Entity @Table(name="cidade")
-public class Cidade {
+public class Cidade implements Serializable {
+    
+    
+    public Cidade(){
+        
+    }
     
     public Cidade(String nome, String estado){
         this.nome = nome;
         this.estado = estado;
     }
     
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
     
     @Column(name = "nome", length = 500)
@@ -67,5 +73,19 @@ public class Cidade {
      */
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    /**
+     * @return the estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

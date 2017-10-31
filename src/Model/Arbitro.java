@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,9 +21,22 @@ import javax.persistence.Table;
  */
 
 @Entity @Table(name="arbitro")
-public class Arbitro {
+public class Arbitro implements Serializable {
     
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    public Arbitro(){
+        
+    }
+    
+    public Arbitro(String nome, String rua, String bairro, int numero, String cep, Cidade cidade){
+        this.nome = nome;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.numero = numero;
+        this.cep = cep;
+        this.cidade = cidade;
+    }
+    
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
 
     @Column(name = "nome")
@@ -43,6 +57,104 @@ public class Arbitro {
     @ManyToOne
     @JoinColumn(name = "cidade_id")
     private Cidade cidade;
+
+    /**
+     * @return the codigo
+     */
+    public int getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    /**
+     * @return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * @return the rua
+     */
+    public String getRua() {
+        return rua;
+    }
+
+    /**
+     * @param rua the rua to set
+     */
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    /**
+     * @return the bairro
+     */
+    public String getBairro() {
+        return bairro;
+    }
+
+    /**
+     * @param bairro the bairro to set
+     */
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    /**
+     * @return the numero
+     */
+    public int getNumero() {
+        return numero;
+    }
+
+    /**
+     * @param numero the numero to set
+     */
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    /**
+     * @return the cep
+     */
+    public String getCep() {
+        return cep;
+    }
+
+    /**
+     * @param cep the cep to set
+     */
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    /**
+     * @return the cidade
+     */
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    /**
+     * @param cidade the cidade to set
+     */
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
+    }
     
 
 }
