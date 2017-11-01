@@ -112,6 +112,12 @@ public class CadastrarJogador extends javax.swing.JFrame {
 
         jLabel15.setText("Time:");
 
+        cbTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTimeActionPerformed(evt);
+            }
+        });
+
         jButton1.setBackground(new java.awt.Color(255, 102, 102));
         jButton1.setText("Cancelar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -267,6 +273,10 @@ public class CadastrarJogador extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cbTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTimeActionPerformed
 
     public void limpaTela(){
         txNome.setText("");

@@ -1,5 +1,20 @@
 package views;
 
+import DAO.ArbitroDAO;
+import DAO.CidadeDAO;
+import DAO.JogadorDAO;
+import DAO.SumulaDAO;
+import DAO.TimeDAO;
+import Model.Arbitro;
+import Model.Cidade;
+import Model.Jogador;
+import Model.Sumula;
+import Model.Time;
+import Util.HibernateUtil;
+import java.util.List;
+import javax.swing.JOptionPane;
+import org.hibernate.Session;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,12 +26,41 @@ package views;
  * @author diego
  */
 public class CadastrarSumula extends javax.swing.JFrame {
+    
+    Session session = HibernateUtil.getSession();
+    ArbitroDAO arbitroDao = new ArbitroDAO(session);
+    TimeDAO timeDao = new TimeDAO(session);
+    List<Arbitro> listaArbitros = arbitroDao.listaTudo();
+    List<Time> listaTimes = timeDao.listaTudo();
 
     /**
      * Creates new form CadastrarCidade
      */
     public CadastrarSumula() {
         initComponents();
+        atualizaCombo();
+    }
+    
+    public void atualizaCombo(){ 
+        for (Arbitro c : listaArbitros) {
+            arbitro_id.addItem(c.getNome());
+        }
+        
+        for (Time t : listaTimes) {
+            cbTime1.addItem(t.getNome());
+        }
+        
+        for (Time t : listaTimes) {
+            cbTime2.addItem(t.getNome());
+        }
+    }
+    
+    public void limpaTela(){
+        arbitro_id.setSelectedIndex(0);
+        cbTime1.setSelectedIndex(0);
+        cbTime2.setSelectedIndex(0);
+        cxGolTime1.setValue("");
+        cxGolTime2.setValue("");
     }
 
     /**
@@ -31,18 +75,18 @@ public class CadastrarSumula extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        arbitro_id = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jSpinner1 = new javax.swing.JSpinner();
+        cxGolTime1 = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cbTime1 = new javax.swing.JComboBox<>();
+        cbTime2 = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
+        cxGolTime2 = new javax.swing.JSpinner();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -54,8 +98,6 @@ public class CadastrarSumula extends javax.swing.JFrame {
 
         jTextField1.setText("1");
         jTextField1.setEnabled(false);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "José", "Fernando", "Luiz" }));
 
         jLabel4.setText("Arbitro:");
 
@@ -79,9 +121,11 @@ public class CadastrarSumula extends javax.swing.JFrame {
 
         jLabel9.setText("Time1:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Santos", "Flamengo", "Vasco" }));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Santos", "Flamengo", "Vasco" }));
+        cbTime1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTime1ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Time 2:");
 
@@ -116,12 +160,12 @@ public class CadastrarSumula extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(arbitro_id, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTextField1)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(jSpinner1))
+                        .addComponent(cxGolTime1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,12 +173,12 @@ public class CadastrarSumula extends javax.swing.JFrame {
                             .addComponent(jLabel10))
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cbTime2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbTime1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(jSpinner2)))
+                        .addComponent(cxGolTime2)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -148,23 +192,23 @@ public class CadastrarSumula extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(arbitro_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTime1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTime2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cxGolTime1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cxGolTime2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -179,6 +223,24 @@ public class CadastrarSumula extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        try {
+            Arbitro arbitro = listaArbitros.get(arbitro_id.getSelectedIndex());
+            Time time1 = listaTimes.get(cbTime1.getSelectedIndex());
+            Time time2 = listaTimes.get(cbTime2.getSelectedIndex());
+            int golTime1 = Integer.parseInt(cxGolTime1.getValue().toString());
+            int golTime2 = Integer.parseInt(cxGolTime2.getValue().toString());
+            
+            Sumula sumula  = new Sumula(arbitro, time1, time2, golTime1, golTime2);
+            
+            SumulaDAO dao = new SumulaDAO(session);
+            
+            dao.salva(sumula);
+            limpaTela();
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            
+            
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -190,6 +252,10 @@ public class CadastrarSumula extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cbTime1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTime1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTime1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,12 +296,14 @@ public class CadastrarSumula extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> arbitro_id;
+    private javax.swing.JComboBox<String> cbTime1;
+    private javax.swing.JComboBox<String> cbTime2;
+    private javax.swing.JSpinner cxGolTime1;
+    private javax.swing.JSpinner cxGolTime2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -243,8 +311,6 @@ public class CadastrarSumula extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

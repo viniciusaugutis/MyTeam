@@ -4,6 +4,7 @@ package Util;
 import Model.Cidade;
 import Model.Arbitro;
 import Model.Jogador;
+import Model.Sumula;
 import Model.Time;
 import java.util.Set;
 import org.hibernate.Session;
@@ -29,6 +30,7 @@ public class HibernateUtil {
         cfg.addAnnotatedClass(Arbitro.class);
         cfg.addAnnotatedClass(Time.class);
         cfg.addAnnotatedClass(Jogador.class);
+        cfg.addAnnotatedClass(Sumula.class);
         factory = cfg.buildSessionFactory();
     }
     public static Session getSession() {
